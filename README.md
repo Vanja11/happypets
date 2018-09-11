@@ -118,4 +118,11 @@ U sledećoj tabeli su izlistani direktorijumi sa opisom
 | [uploads](uploads) | Direktorijum za upload fotografija |
 | [views](views) | Kontroler koristi view za konačno oblikovanje i prikaz stranice ili elementa |
 
+### Fajlovi
+Pored gore navedenih direktorijuma u projektu postoje i sledeći fajlovi:
 
+| Naziv fajla | Opis |
+| --- | --- |
+| [ajax.php](ajax.php) | Obrada AJAX zahteva |
+| [config.php](config.php) | Konfiguracija aplikacije |
+| [index.php](index.php) | Index |
