@@ -49,7 +49,13 @@ Nakon prijave, korisniku su dostupne opcije za dodavanje oglasa kao i za odjavlj
 Kada korisnik želi da završi korišćenje aplikacije, može se odjaviti.
 
 ### Dodavanje oglsa
-TODO
+Prijavljeni korisnici imaju mogućnost dodavanja oglasa. Forma za dodavanje oglasa sadrži sledeća polja:
+
+- Kategorija, padajući meni u kome su izlistane sve postojeće kategorije
+- Naslov oglasa
+- Tekst oglasa
+- Telefon, nije obavezno polje. Ukoliko nije unet broj telefona, na oglasu će se prikazati broj telefona korisnika
+- Slike, 5 file inputa
 
 ### Izmena oglasa
 Ova stranica je identična stranici "Dodavanje oglasa", osim što su polja već popunjena informacijama o tom oglasu.
@@ -88,3 +94,28 @@ Na ovoj stranici su prikazane sve informacije o oglasu i to:
 - Opis
 - Ime i broj telefona korisnika koji je postavio oglas
 - Slideshow sa najviše 5 fotografija
+
+### Kontakt
+Kontakt forma putem koje će posetilac moći da kontaktira autora aplikacije.
+
+Ukoliko je korisnik prijavljen, polja za ime i E-Mail adresu će biti popunjena i onemogućena.
+
+## Struktura projekta
+
+Projekat je baziran na MVC (Model-View-Controller) arhitekturi koja je za potrebe ovog projekta uprošćena.
+
+### Direktorijumi
+U sledećoj tabeli su izlistani direktorijumi sa opisom
+
+|Naziv direktorijuma|Opis|
+|---|---|---|
+|[controllers](controllers)|Kontroleri, pripremaju podatke potrebne za prikaz stranice|
+|[css](css)|Stilovi|
+|[images](images)|Statičke slike|
+|[js](js)|JavaScript biblioteke i skripte potrebne za funkcionisanje aplikacije|
+|[layout](layout)|Kostur aplikacije (header i footer)|
+|[lib](lib)|Biblioteke aplikacije|
+|[uploads](uploads)|Direktorijum za upload fotografija|
+|[views](views)|Kontroler koristi view za konačno oblikovanje i prikaz stranice ili elementa|
+
+

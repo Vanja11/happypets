@@ -6,21 +6,20 @@ if (strstr($_GET['page'], '/') !== false) {
 
 define('IN_PAGE', true);
 
-include('views/view.php');
-
-session_start();
-
 include('config.php');
 include('lib/db.php');
+include('lib/view.php');
+
+session_start();
 
 $db = new DB();
 
 $page = $_GET['page'] ? $_GET['page'] : 'home';
 
-if (file_exists('pages/' . $page . '.php')) {
-    include('pages/' . $page . '.php');
+if (file_exists('controllers/' . $page . '.php')) {
+    include('controllers/' . $page . '.php');
 } else {
-    include('pages/404.php');
+    include('controllers/404.php');
 }
 
 include('layout/footer.php');

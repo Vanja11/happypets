@@ -7,3 +7,7 @@
     background-color: rgba(255,255,255,0.8);
     padding: 10em;
 }
+
+body {
+    padding-bottom: 5rem;
+}

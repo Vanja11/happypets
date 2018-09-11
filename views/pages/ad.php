@@ -9,7 +9,10 @@
             </p>
 
             <p>
-                Ovog ljubimca možete usvojiti pozivom na <strong><?php echo $this->escape($this->ad['phone'] ? $this->ad['phone'] : $this->ad['uphone']); ?> (<?php echo $this->ad['name']; ?>)</strong>
+                Ovog ljubimca možete usvojiti pozivom na <strong><?php echo $this->escape($this->ad['phone'] ? $this->ad['phone'] : $this->ad['uphone']); ?> (<?php echo $this->escape($this->ad['name']); ?>)</strong>
+            </p>
+            <p>
+                <a href="index.php?page=user&user=<?php echo $this->ad['users_id']; ?>">Svi oglasi korisnika <strong><?php echo $this->escape($this->ad['name']); ?></strong>
             </p>
         </div>
         <div class="col-sm">
@@ -27,11 +30,11 @@
             </div>
             <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only">Prethodna</span>
             </a>
             <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
+                <span class="sr-only">Sledeća</span>
             </a>
             </div>
             </div>
