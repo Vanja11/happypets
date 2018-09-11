@@ -107,15 +107,15 @@ Projekat je baziran na MVC (Model-View-Controller) arhitekturi koja je za potreb
 ### Direktorijumi
 U sledećoj tabeli su izlistani direktorijumi sa opisom
 
-|Naziv direktorijuma|Opis|
-|---|---|---|
-|[controllers](controllers)|Kontroleri, pripremaju podatke potrebne za prikaz stranice|
-|[css](css)|Stilovi|
-|[images](images)|Statičke slike|
-|[js](js)|JavaScript biblioteke i skripte potrebne za funkcionisanje aplikacije|
-|[layout](layout)|Kostur aplikacije (header i footer)|
-|[lib](lib)|Biblioteke aplikacije|
-|[uploads](uploads)|Direktorijum za upload fotografija|
-|[views](views)|Kontroler koristi view za konačno oblikovanje i prikaz stranice ili elementa|
+| Naziv direktorijuma | Opis |
+| --- | --- | --- |
+| [controllers](controllers) | Kontroleri, pripremaju podatke potrebne za prikaz stranice |
+| [css](css) | Stilovi |
+| [images](images) | Statičke slike |
+| [js](js) | JavaScript biblioteke i skripte potrebne za funkcionisanje aplikacije |
+| [layout](layout) | Kostur aplikacije (header i footer) |
+| [lib](lib) | Biblioteke aplikacije |
+| [uploads](uploads) | Direktorijum za upload fotografija |
+| [views](views) | Kontroler koristi view za konačno oblikovanje i prikaz stranice ili elementa |
 
 
