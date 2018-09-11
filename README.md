@@ -1,11 +1,20 @@
-# HappyPets
+# HappyPets :cat2: :poodle:
 ## Seminarski rad za kurs PHP Programiranje na IT Akademiji
 ### Autor: Valentina Gmitrović
+E-Mail [gmitrovicvalentina1@gmail.com](mailto:gmitrovicvalentina1@gmail.com)
+
+Github [Vanja11](https://github.com/Vanja11)
 
 ## Opis aplikacije
 Aplikacija **HappyPets** je namenjena ljubiteljima životinja koji žele da pomognu napuštenim, bolesnim i na bilo koji drugi način ugroženim životinjama. Trenutna verzija aplikacije omogućava brzo i jednostavno postavljanje oglasa za udomljavanje napuštenih životinja i prikazivanje potencijalnim udomiteljima.
 
 Ideja za ovakav projekat je potekla od činjenice da je na ulicama svih gradova u Srbiji previše životinja koje su neodgovorni vlasnici izbacili, kao i onih o kojima nema ko da brine ili leči, s obzirom da nadležne institucije nisu zainteresovane za rešavanje ovog problema. Mali broj ljudi ima želju da pomogne ovim životinjama, ali oni nailaze na prepreke, kako novčane prirode, tako i teškog pronalaženja domova za njih.
+
+## Korišćene tehnologije
+- PHP
+- MySQL
+- Bootstrap
+- jQuery
 
 ## Funkcije aplikacije
 
@@ -45,6 +54,7 @@ TODO
 ### Izmena oglasa
 Ova stranica je identična stranici "Dodavanje oglasa", osim što su polja već popunjena informacijama o tom oglasu.
 
+Takodje postoji i opcija uredjivanja već postavljenih fotografija (brisanje i dodavanje)
 
 ### Izlistavanje kategorije
 Na ovoj stranici korisnik može videti oglase u odabranoj kategoriji. Oglas sadrži fotografiju, naslov, opis, ime korisnika koji je postavio oglas sa linkom do svih njegovih oglasa i datum postavljanja oglasa. 
@@ -63,15 +73,18 @@ Oglasi su prikazani u vidu mreže, gde se u jednom redu prikazuje najviše 3 ogl
 Kada korisnik pritisne dugme "Obriši oglas", postavlja mu se pitanje da li je siguran. Ukoliko korisnik odgovori potvrdno, oglas se briše, a na njegovom mestu se pojavljuje poruka da je oglas uspešno obrisan. Ova poruka je vidljiva samo korisniku koji je obrisao oglas, i to dok ne napusti stranicu.
 
 #### Izmena oglasa
-Dugme vodi na stranicu [Izmena oglasa](.### Izmena oglasa) 
+Dugme vodi na stranicu [Izmena oglasa](###-Izmena-oglasa) 
 
 #### Obnavljanje oglasa
-
-
-Takodje postoji i opcija uredjivanja već postavljenih fotografija (brisanje i dodavanje)
-
-
+Klikom na ovaj link, korisnik će obnoviti oglas na mesec dana, a poruka o isteku oglasa će se zameniti porukom o uspešnom obnavljanju oglasa.
 
 ### Izlistavanje oglasa korisnika
 Ova stranica je identična stranici "Izlistavanje kategorije", ali umesto oglasa iz kategorije, prikazuju se svi oglasi izabranog korisnika.
 
+### Oglas
+Na ovoj stranici su prikazane sve informacije o oglasu i to:
+
+- Naslov
+- Opis
+- Ime i broj telefona korisnika koji je postavio oglas
+- Slideshow sa najviše 5 fotografija
