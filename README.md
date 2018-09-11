@@ -108,7 +108,7 @@ Projekat je baziran na MVC (Model-View-Controller) arhitekturi koja je za potreb
 U sledećoj tabeli su izlistani direktorijumi sa opisom
 
 | Naziv direktorijuma | Opis |
-| --- | --- | --- |
+| --- | --- |
 | [controllers](controllers) | Kontroleri, pripremaju podatke potrebne za prikaz stranice |
 | [css](css) | Stilovi |
 | [images](images) | Statičke slike |
