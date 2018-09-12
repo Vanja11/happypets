@@ -41,15 +41,16 @@ class DB {
         if ($statement = $this->mysqli->prepare('SELECT * FROM users WHERE id = ?')) {
             $statement->bind_param('i', $user);
 
-            $statement->execute();
-
-            $res = $statement->get_result();
-            $users = $res->fetch_all(MYSQLI_ASSOC);
-            $statement->close();
-
-            return $users[0];
+            if ($statement->execute()) {
+                $res = $statement->get_result();
+                $users = $res->fetch_all(MYSQLI_ASSOC);
+                $statement->close();
+    
+                if (count($users) > 0) {
+                    return $users[0];
+                }
+            }
         }
-
         return null;
     }
 

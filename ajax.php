@@ -1,9 +1,5 @@
 <?php
 
-if (strstr($_GET['func'], '/') !== false) {
-    die('Sta to radis?');
-}
-
 session_start();
 
 include('config.php');
@@ -11,7 +7,9 @@ include('lib/db.php');
 
 
 if (!isset($_GET['func'])) {
-    die('Nepotpuni parametri');
+    die(json_encode([
+        error => 'Mora biti odabrana funkcija'
+    ]));
 }
 
 function deleteAd() {
@@ -77,6 +75,11 @@ function renewAd() {
     $db->renewAd($adId);
     echo json_encode([]);
 }
-
-call_user_func($_GET['func']);
+if (function_exists($_GET['func'])) {
+    call_user_func($_GET['func']);
+} else {
+    die(json_encode([
+        error => 'Funkcija ne postoji'
+    ]));
+}
 

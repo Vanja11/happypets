@@ -102,10 +102,16 @@ Ukoliko je korisnik prijavljen, polja za ime i E-Mail adresu će biti popunjena 
 
 ## Struktura projekta
 
-Projekat je baziran na MVC (Model-View-Controller) arhitekturi koja je za potrebe ovog projekta uprošćena.
+Projekat je baziran na MVC (Model-View-Controller) arhitekturi koja je za potrebe ovog projekta uprošćena na taj način što ne postoje posebni modeli za svaku tabelu u bazi, već se sve obavlja iz jedne klase.
+
+Prednost MVC arhitekture je u tome što je izvršavanje i pisanje aplikacije odvojeno na 3 sloja, čime se značajno doprinosi lakšem pisanju i čitanju koda, uz smanjenu mogućnost grešaka od strane programera.
+
+- **Model** omogućava pristup bazi podataka
+- **View** je prezentacioni sloj
+- **Controller** je zadužen za svu poslovnu logiku
 
 ### Direktorijumi
-U sledećoj tabeli su izlistani direktorijumi sa opisom
+U sledećoj tabeli su izlistani direktorijumi sa opisom:
 
 | Naziv direktorijuma | Opis |
 | --- | --- |
@@ -126,3 +132,157 @@ Pored gore navedenih direktorijuma u projektu postoje i sledeći fajlovi:
 | [ajax.php](ajax.php) | Obrada AJAX zahteva |
 | [config.php](config.php) | Konfiguracija aplikacije |
 | [index.php](index.php) | Index |
+
+### Baza podataka
+Struktura baze se može videti na dijagramu:
+
+![Dijagram](doc/dijagram.png "Dijagram")
+
+### PHP Kôd
+#### index.php
+Svaki zahtev napravljen na aplikaciji, mora proći kroz *index.php* fajl, izuzev AJAX (Asynchronous JavaScript and XML) zahteva.
+
+Na samom početku fajla se štitimo od potencijalnog hakerskog napada, koji bi omogućio čitanje bilo kog fajla na serveru.
+
+```php
+if (strstr($_GET['page'], '/') !== false) {
+    die('Ovo nije dozvoljeno');
+}
+```
+Upotrebom *strstr* funkcije, proveravamo da li `$_GET['page']` sadrži karakter `\`, i ukoliko sadrži, sprečavamo korisnika da na taj način inkluduje neki PHP fajl van direktorijuma `controllers` tako što bi pokušao da se vrati direktorijum unazad (na primer `../lib/db.php`).
+
+Zatim definišemo konstantu `IN_PAGE` kojom ćemo se u ostalim PHP fajlovima osigurali od pokušaja direktnog pristupa umesto kroz `index.php` fajl.
+
+```php
+define('IN_PAGE', true);
+```
+
+Inkludujemo dodatne potrebne fajlove
+```php
+include('config.php'); // Konfiguracija parametara aplikacije
+include('lib/db.php'); // Klasa za pristup bazi podataka
+include('lib/view.php'); // View klasa
+```
+
+Pošto nam je u aplikaciji potrebna sesija koristimo funkciju *session_start*
+```php
+session_start();
+```
+
+Instanciramo klasu za pristup bazi podataka
+```php
+$db = new DB();
+```
+
+Zatim inkludujemo željeni kontroler na osnovu `$_GET['page']` parametra. Ukoliko on nije postavljen, inkludovaćemo *home* kontroler. Ukoliko željeni kontroler ne postoji, inkludujemo *404* kontroler koji predstavlja nepostojeću stranicu.
+
+```php
+$page = $_GET['page'] ? $_GET['page'] : 'home';
+
+if (file_exists('controllers/' . $page . '.php')) {
+    include('controllers/' . $page . '.php');
+} else {
+    include('controllers/404.php');
+}
+```
+
+Na kraju inkludujemo `footer.php` fajl.
+
+```php
+include('layout/footer.php');
+```
+
+#### ajax.php
+Ovaj fajl služi za obradu AJAX zahteva. Trenutno su podržane 2 funkcije i to za brisanje oglasa i obnavljanje oglasa.
+
+Dosta je sličan `index.php` fajlu, osim što umesto inkludovanja kontrolera, izvršava funkcije koje se nalaze u njemu.
+
+Prvo proveravamo da li je poslat parametar kojim se bira željena funkcija, a ukoliko nije, prekidamo skriptu greškom.
+
+Obzirom da se radi o AJAX zahtevu, želimo da sadržaj vratimo u JSON formatu, koji lako možemo obraditi iz JavaScripta.
+
+```php
+if (!isset($_GET['func'])) {
+    die(json_encode([
+        error => 'Mora biti odabrana funkcija'
+    ]));
+}
+```
+
+Zatim definišemo funkcije
+```php
+function deleteAd() {
+    ...
+}
+function renewAd() {
+    ...
+}
+```
+
+I na kraju proveravamo da li željena funkcija postoji korišćenjem `function_exists` funkcije, i izvršavamo je pomoću `call_user_func` funkcije koja služi za pozivanje funkcije na osnovu prosledjene promenljive.
+
+```php
+if (function_exists($_GET['func'])) {
+    call_user_func($_GET['func']);
+} else {
+    die(json_encode([
+        error => 'Funkcija ne postoji'
+    ]));
+}
+```
+
+#### lib/db.php
+Klasa koja nam omogućava da pristupimo bazi. 
+
+U konstruktoru klase ostvarujemo konekciju na MySQL bazu podataka
+
+```php
+function __construct() {
+    $this->mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
+    if ($this->mysqli->connect_errno) {
+        die('Failed to connect to MySQL: (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
+    }
+}
+```
+
+Ostatak ove klase čine metode koje za zadatak imaju da omoguće čitanje i upis u bazu podataka.
+
+Za primer ćemo uzeti metodu `getUser`
+
+```php
+ public function getUser($user) {
+    if ($statement = $this->mysqli->prepare('SELECT * FROM users WHERE id = ?')) {
+        $statement->bind_param('i', $user);
+
+        if ($statement->execute()) {
+            $res = $statement->get_result();
+            $users = $res->fetch_all(MYSQLI_ASSOC);
+            $statement->close();
+
+            if (count($users) > 0) {
+                return $users[0];
+            }
+        }
+    }
+    return null;
+}
+```
+Analiziraćemo u nastavku `getUser` metodu.
+
+Za izvršenje SQL upita su korišćeni *prepared statementi* kako bi se na što efikasniji način sprečili potencijalni napadi putem ubrizgavanja SQL koda kroz POST i GET parametre.
+
+```php
+$statement = $this->mysqli->prepare('SELECT * FROM users WHERE id = ?')
+```
+
+Zatim ćemo zameniti parametre u pripremljenom upitu pomoću `bind_param` metode. Obzirom da želimo da parametar koji prosledjujemo upitu bude *integer*, za tip ćemo koristiti `i`, i prosledićemo ID željenog korisnika, u ovom slučaju sadržanog u promenljivoj `$user`
+```php
+$statement->bind_param('i', $user);
+```
+
+Izvršavamo, odnosno šaljemo upit MySQL serveru
+
+```php
+$statement->execute()
+```
+

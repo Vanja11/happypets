@@ -1,8 +1,8 @@
 <?php
 
-if (strstr($_GET['page'], '/') !== false) {
-    die('Sta to radis?');
-}
+// if (strstr($_GET['page'], '/') !== false) {
+//     die('Ovo nije dozvoljeno');
+// }
 
 define('IN_PAGE', true);
 
