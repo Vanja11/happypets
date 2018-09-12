@@ -9,19 +9,19 @@ class View {
         $this->vars = [];
     }
 
-    function __get($name) {
+    public function __get($name) {
         return isset($this->vars[$name]) ? $this->vars[$name] : null;
     }
 
-    function __set($name, $value) {
+    public function __set($name, $value) {
         $this->vars[$name] = $value;
     }
 
-    function escape($str) {
+    public function escape($str) {
         return htmlspecialchars($str);
     }
 
-    function render() {
+    private function render() {
         ob_start();
         include($this->viewPath);
         $buffer = ob_get_clean();
@@ -29,7 +29,7 @@ class View {
         return $buffer;
     }
 
-    function __toString() {
+    public function __toString() {
         return $this->render();
     }
 }

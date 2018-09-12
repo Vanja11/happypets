@@ -309,3 +309,55 @@ if (count($users) > 0) {
 ```
 
 Ukoliko je ranije došlo do nekog problema, pošto nisu ispunjeni uslovi, nastaviće se dalje izvršavanje skripte, i ona će konačno vratiti `null`, i na taj način indikovati da korisnik nije pronadjen.
+
+#### lib/view.php
+Jednostavna View klasa koja omogućava učitavanje viewa, postavljanje i čitanje promenljivih, zaštitu od XSS (Cross Site Scripting) i render stranice.
+
+Konstruktor klase prima samo jedan argument, i to putanju do fajla. Putanju postavljamo u privatan property `$viewPath`, i istovremeno dodeljujemo prazan niz privatnom propertyju `$vars`. Ovaj property će služiti za čuvanje promenljivih koje će biti dostupne unutar view-a.
+
+```php
+function __construct($viewPath) {
+    $this->viewPath = $viewPath;
+    $this->vars = [];
+}
+```
+
+Koristimo magične `__get` i `__set` metode za postavljanje i čitanje promenljivih
+```php
+public function __get($name) {
+    return isset($this->vars[$name]) ? $this->vars[$name] : null;
+}
+
+public function __set($name, $value) {
+    $this->vars[$name] = $value;
+}
+```
+
+Zatim imamo `escape` metodu koju ćemo koristiti iz view-a kako bismo sprečili da korisnik unese XSS kod. Bez ovoga bi korisnik mogao da na primer kao tekst oglasa upiše `<script>window.location='http://www.nekisajt.com'</script>` te bi svaki posetilac stranice na kojoj se ispisuje ovaj tekst automatski bio preusmeren na stranicu `http://www.nekisajt.com`. Kao zaštitu koristimo `htmlspecialchars` funkciju koja zamenjuje HTML karaktere poput `<` i `>` u `&lt;` i `&gt;` i na taj način će se ovakav tekst samo prikazati u browseru.
+```php
+public function escape($str) {
+    return htmlspecialchars($str);
+}
+```
+
+Za render koristimo `ob_start` funkciju kojom započinjemo čuvanje celokupnog sadržaja koji bi se štampao na ekran. 
+
+Nakon toga inkludujemo view fajl.
+
+Funkcijom `ob_get_clean` sačuvani sadržaj preuzimamo u promenljivu `$buffer` i istovremeno brišemo sačuvani sadržaj iz privremene memorije, i nakon toga vraćamo taj rezultat. Ova metoda je privatna pošto joj se neće pristupati spolja.
+```php
+private function render() {
+    ob_start();
+    include($this->viewPath);
+    $buffer = ob_get_clean();
+
+    return $buffer;
+}
+```
+
+Magična metoda `__toString` će se pozvati kada iz nekog kontrolera pozovemo `echo $view` ili na neki drugi način `$view` pretvorimo u string (na primer konkatenacijom)
+```php
+public function __toString() {
+    return $this->render();
+}
+```
