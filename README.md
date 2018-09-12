@@ -22,7 +22,7 @@ Ideja za ovakav projekat je potekla od činjenice da je na ulicama svih gradova 
 Na početnoj stranici korisnik može videti osnovne informacije o aplikaciji, čemu je namenjena, kao i prečice za dodavanje oglasa i kategorije postavljenih oglasa.
 
 ### Registracija
-![Forma za registraciju](doc/registracija.png "Forma za registraciju")
+
 Da bi korisnik mogao da postavlja oglase, neophodno je da se registruje. 
 
 Forma za registraciju sadrži polja:
@@ -32,7 +32,13 @@ Forma za registraciju sadrži polja:
 - E-Mail Adresa, mora biti ispravna E-Mail adresa
 - Lozinka, mora sadržati najmanje 6 karaktera
 
+![Forma za registraciju](doc/registracija.png "Forma za registraciju")
+
+
 Ukoliko neko od ovih polja nije validno, korisniku će se prikazati greška, kao i forma za registraciju sa već popunjenim poljima.
+
+![Greška](doc/greska.png "Greška")
+
 
 Nakon uspešne registracije, korisniku će biti prikazana poruka o uspešnoj registraciji sa instrukcijama za prijavljivanje na aplikaciju.
 
