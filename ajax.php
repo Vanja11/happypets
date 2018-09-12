@@ -44,6 +44,38 @@ function deleteAd() {
     echo json_encode([]);
 }
 
+function deletePhoto() {
+    $photoId = $_GET['photo'];
+    $user = $_SESSION['user'];
+
+    if (!isset($photoId)) {
+        http_response_code(400);
+        die(json_encode([
+            error => 'ID fotografije je obavezan'
+        ]));
+    }
+
+    if (!isset($user)) {
+        http_response_code(401);
+        die(json_encode([
+            error => 'Niste prijavljeni'
+        ]));
+    }
+
+    $db = new DB();
+    $photo = $db->getPhoto($photoId);
+
+    if ($user['id'] != $photo['users_id']) {
+        http_response_code(401);
+        die(json_encode([
+            error => 'Pokušavate da obrišete fotografiju koja nije vaša'
+        ]));
+    }
+
+    $db->deletePhoto($photoId);
+    echo json_encode([]);
+}
+
 function renewAd() {
     $adId = $_GET['ad'];
     $user = $_SESSION['user'];

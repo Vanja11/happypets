@@ -22,6 +22,7 @@ Ideja za ovakav projekat je potekla od činjenice da je na ulicama svih gradova 
 Na početnoj stranici korisnik može videti osnovne informacije o aplikaciji, čemu je namenjena, kao i prečice za dodavanje oglasa i kategorije postavljenih oglasa.
 
 ### Registracija
+![Forma za registraciju](doc/registracija.png "Forma za registraciju")
 Da bi korisnik mogao da postavlja oglase, neophodno je da se registruje. 
 
 Forma za registraciju sadrži polja:
@@ -193,7 +194,7 @@ include('layout/footer.php');
 ```
 
 #### ajax.php
-Ovaj fajl služi za obradu AJAX zahteva. Trenutno su podržane 2 funkcije i to za brisanje oglasa i obnavljanje oglasa.
+Ovaj fajl služi za obradu AJAX zahteva. Trenutno su podržane 3 funkcije i to za brisanje oglasa, brisanje fotografija i obnavljanje oglasa.
 
 Dosta je sličan `index.php` fajlu, osim što umesto inkludovanja kontrolera, izvršava funkcije koje se nalaze u njemu.
 
@@ -212,6 +213,9 @@ if (!isset($_GET['func'])) {
 Zatim definišemo funkcije
 ```php
 function deleteAd() {
+    ...
+}
+function deletePhoto() {
     ...
 }
 function renewAd() {
@@ -361,3 +365,6 @@ public function __toString() {
     return $this->render();
 }
 ```
+
+#### Primer kontrolera
+Kao primer kontrolera uzećemo `edit.php` pošto je to kontroler koji obuhvata validaciju ulaznih parametara, korišćenje viewa, upis u bazu i postavljanje fotografija

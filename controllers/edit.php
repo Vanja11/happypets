@@ -10,6 +10,7 @@ $ad = $db->getAd($_GET['ad']);
 $categories = $db->getCategories();
 $editView->ad = $ad;
 $editView->categories = $categories;
+$editView->photos = $db->getPhotos($_GET['ad']);
 
 $error = null;
 
@@ -33,7 +34,7 @@ if (!empty($_POST)) {
 
 
     if (!$error) {
-        $db->updateAd($ad['id'], $_POST['category'], $_POST['title'], $_POST['description'], $_POST['phone']);
+        $db->updateAd($ad['id'], $_POST['category'], $_POST['title'], $_POST['description'], $_POST['phone'], $_FILES['photos']);
     }
 } 
 

@@ -70,9 +70,40 @@ class DB {
         return null;
     }
 
+    public function getPhoto($photo) {
+        if ($statement = $this->mysqli->prepare('SELECT uploads.*, ads.users_id FROM uploads LEFT JOIN ads ON ads_id = ads.id WHERE uploads.id = ?')) {
+            $statement->bind_param('i', $photo);
+
+            $statement->execute();
+
+            $res = $statement->get_result();
+            $photos = $res->fetch_all(MYSQLI_ASSOC);
+            $statement->close();
+
+            return $photos[0];
+        }
+
+        return null;
+    }
+
+
     public function deleteAd($ad) {
         if ($statement = $this->mysqli->prepare('DELETE FROM ads WHERE id = ?')) {
             $statement->bind_param('i', $ad);
+
+            $statement->execute();
+
+            $statement->close();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function deletePhoto($photo) {
+        if ($statement = $this->mysqli->prepare('DELETE FROM uploads WHERE id = ?')) {
+            $statement->bind_param('i', $photo);
 
             $statement->execute();
 
@@ -184,7 +215,7 @@ class DB {
         }
     }
 
-    public function updateAd($id, $category, $title, $description, $phone) {
+    public function updateAd($id, $category, $title, $description, $phone, $photos) {
         $user = $_SESSION['user'];
 
         if ($statement = $this->mysqli->prepare('UPDATE ads SET categories_id = ?, title = ?, description = ?, phone = ?, updated_at = ? WHERE id = ? AND users_id = ?')) {
@@ -194,6 +225,12 @@ class DB {
             $statement->execute();
 
             $statement->close();
+
+            for ($i = 0; $i < 5; $i++) {
+                if ($photos['tmp_name'][$i] !== '' && strpos($photos['type'][$i], 'image/') === 0) {
+                    $this->uploadPhoto($id, $photos['name'][$i], $photos['tmp_name'][$i]);
+                }
+            }     
         }
     }
 

@@ -75,11 +75,21 @@ include('layout/header.php');
 
                 <div class="form-group">
                     <label>Slike</label>
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
+                    <li class="list-group-item">
+                        <input name="photos[]" type="file" class="form-control-file">
+                    </li>
+                    <li class="list-group-item">
+                        <input name="photos[]" type="file" class="form-control-file">
+                    </li>
+                    <li class="list-group-item">
+                        <input name="photos[]" type="file" class="form-control-file">
+                    </li>
+                    <li class="list-group-item">
+                        <input name="photos[]" type="file" class="form-control-file">
+                    </li>
+                    <li class="list-group-item">
+                        <input name="photos[]" type="file" class="form-control-file">
+                    </li>
                 </div>
 
                 

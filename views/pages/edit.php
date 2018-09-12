@@ -45,12 +45,27 @@
 
                 <div class="form-group">
                     <label>Slike</label>
-                    Dodaj kasnije
-                    <!-- <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file">
-                    <input name="photos[]" type="file" class="form-control-file"> -->
+                    <ul class="list-group list-group-flush">
+                        <?php 
+                            foreach($this->photos as $photo) {
+                                ?>
+                                    <li class="list-group-item">
+                                        <img width="100" src="uploads/<?php echo $photo['path']; ?>" /> 
+                                        <a href="#" onclick="return deletePhoto(<?php echo $photo['id']; ?>, this)">Obriši</a>
+                                    </li>
+                                <?php
+                            }
+                            $count = count($this->photos);
+                            for ($i = 0; $i < 5 - $count; $i++) {
+                                ?>
+                                    <li class="list-group-item">
+                                        <input name="photos[]" type="file" class="form-control-file">
+                                    </li>
+                                <?php
+                            }
+                        ?>
+                        
+                    </ul>
                 </div>
 
                 
