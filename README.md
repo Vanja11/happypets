@@ -286,3 +286,26 @@ Izvršavamo, odnosno šaljemo upit MySQL serveru
 $statement->execute()
 ```
 
+Ukoliko je sve u redu sa izvršenjem upita, pomoću `get_result` metode ćemo uzeti rezultat.
+```php
+$res = $statement->get_result();
+```
+
+Potom je potrebno da iz rezultata preuzmemo niz korisnika koji su vraćeni u rezultatu. Ovo ćemo postići metodom `fetch_all`, koja kao parametar prima tip niza koji će biti vraćen. Pošto nas interesuje da to bude asocijativni niz, koristićemo `MYSQLI_ASSOC` tip.
+```php
+$users = $res->fetch_all(MYSQLI_ASSOC);
+```
+
+Nakon završenog rada sa pripremljenim upitom, zatvorićemo ga kako bismo oslobodili memoriju.
+```php
+$statement->close();
+```
+
+Vratićemo prvi rezultat ukoliko postoji, jer je to naš željeni korisnik
+```php
+if (count($users) > 0) {
+    return $users[0];
+}
+```
+
+Ukoliko je ranije došlo do nekog problema, pošto nisu ispunjeni uslovi, nastaviće se dalje izvršavanje skripte, i ona će konačno vratiti `null`, i na taj način indikovati da korisnik nije pronadjen.
