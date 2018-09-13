@@ -21,5 +21,3 @@ if (file_exists('controllers/' . $page . '.php')) {
 } else {
     include('controllers/404.php');
 }
-
-include('layout/footer.php');

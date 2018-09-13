@@ -2,7 +2,6 @@
 if (!defined('IN_PAGE')) {
     die ('Otkud ti ovde?');
 }
-include('layout/header.php');
 
 $categories = $db->getCategories();
 $view = new View('views/pages/home.php');

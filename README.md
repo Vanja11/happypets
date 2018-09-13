@@ -208,7 +208,7 @@ Instanciramo klasu za pristup bazi podataka
 $db = new DB();
 ```
 
-Zatim inkludujemo željeni kontroler na osnovu `$_GET['page']` parametra. Ukoliko on nije postavljen, inkludovaćemo *home* kontroler. Ukoliko željeni kontroler ne postoji, inkludujemo *404* kontroler koji predstavlja nepostojeću stranicu.
+Na kraju inkludujemo željeni kontroler na osnovu `$_GET['page']` parametra. Ukoliko on nije postavljen, inkludovaćemo *home* kontroler. Ukoliko željeni kontroler ne postoji, inkludujemo *404* kontroler koji predstavlja nepostojeću stranicu.
 
 ```php
 $page = $_GET['page'] ? $_GET['page'] : 'home';
@@ -218,12 +218,6 @@ if (file_exists('controllers/' . $page . '.php')) {
 } else {
     include('controllers/404.php');
 }
-```
-
-Na kraju inkludujemo `footer.php` fajl.
-
-```php
-include('layout/footer.php');
 ```
 
 #### ajax.php
@@ -350,7 +344,7 @@ Ukoliko je ranije došlo do nekog problema, pošto nisu ispunjeni uslovi, nastav
 #### lib/view.php
 Jednostavna View klasa koja omogućava učitavanje viewa, postavljanje i čitanje promenljivih, zaštitu od XSS (Cross Site Scripting) i render stranice.
 
-Konstruktor klase prima samo jedan argument, i to putanju do fajla. Putanju postavljamo u privatan property `$viewPath`, i istovremeno dodeljujemo prazan niz privatnom propertyju `$vars`. Ovaj property će služiti za čuvanje promenljivih koje će biti dostupne unutar view-a.
+Konstruktor klase prima dva argumenta, i to putanju do fajla i da li će se renderovati header i footer. Putanju postavljamo u privatan property `$viewPath`, i istovremeno dodeljujemo prazan niz privatnom propertyju `$vars`. Ovaj property će služiti za čuvanje promenljivih koje će biti dostupne unutar view-a. Property `$renderLayout` ćemo koristiti kao uslov za prikazivanje headera i footera stranice.
 
 ```php
 function __construct($viewPath) {
@@ -379,13 +373,23 @@ public function escape($str) {
 
 Za render koristimo `ob_start` funkciju kojom započinjemo čuvanje celokupnog sadržaja koji bi se štampao na ekran. 
 
-Nakon toga inkludujemo view fajl.
+Nakon toga inkludujemo layout ukoliko je potrebno, i view fajl.
 
 Funkcijom `ob_get_clean` sačuvani sadržaj preuzimamo u promenljivu `$buffer` i istovremeno brišemo sačuvani sadržaj iz privremene memorije, i nakon toga vraćamo taj rezultat. Ova metoda je privatna pošto joj se neće pristupati spolja.
 ```php
 private function render() {
     ob_start();
+
+    if ($this->renderLayout) {
+        include('layout/header.php');
+    }
+    
     include($this->viewPath);
+
+    if ($this->renderLayout) {
+        include('layout/footer.php');
+    }
+
     $buffer = ob_get_clean();
 
     return $buffer;

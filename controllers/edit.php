@@ -2,7 +2,6 @@
 if (!defined('IN_PAGE')) {
     die ('Otkud ti ovde?');
 }
-include('layout/header.php');
 
 $editView = new View('views/pages/edit.php');
 
