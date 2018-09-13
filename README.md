@@ -7,7 +7,37 @@ GitHub: [Vanja11](https://github.com/Vanja11)
 
 Demo: [http://happypets.mojamackica.com](http://happypets.mojamackica.com)
 
-## Opis aplikacije
+## Sadržaj
+- [Uvod](##uvod)
+- [Korišćene tehnologije](##korišćene-tehnologije)
+- [Stranice aplikacije](##stranice-aplikacije)
+    - [Registracija](###registracija)
+    - [Prijava](###prijava)
+    - [Odjava](###odjava)
+    - [Dodavanje oglasa](###dodavanje-oglasa)
+    - [Izmena oglasa](###izmena-oglasa)
+    - [Izlistavanje kategorije](###izlistavanje-kategorije)
+        - [Brisanje oglasa](####brisanje-oglasa)
+        - [Izmena oglasa](####izmena-oglasa)
+        - [Obnavljanje oglasa](####obnavljanje-oglasa)
+    - [Izlistavanje oglasa korisnika](###izlistavanje-oglasa-korisnika)
+    - [Oglas](###oglas)
+- [Struktura projekta](##struktura-projekta)
+    - [Direktorijumi](###direktorijumi)
+    - [Fajlovi](###fajlovi)
+    - [Baza podataka](###baza-podataka)
+- [PHP Kôd](##php-kôd)
+    - [index.php](####index.php)
+    - [ajax.php](####ajax.php)
+    - [lib/db.php](####lib/db.php)
+    - [lib/view.php](####lib/view.php)
+    - [Primer kontrolera](####primer-kontrolera)
+- [JavaScript Kôd](##javascript-kôd)
+- [Zaključak](##zaključak)
+
+
+
+## Uvod
 Aplikacija **HappyPets** je namenjena ljubiteljima životinja koji žele da pomognu napuštenim, bolesnim i na bilo koji drugi način ugroženim životinjama. Trenutna verzija aplikacije omogućava brzo i jednostavno postavljanje oglasa za udomljavanje napuštenih životinja i prikazivanje potencijalnim udomiteljima.
 
 Ideja za ovakav projekat je potekla od činjenice da je na ulicama svih gradova u Srbiji previše životinja koje su neodgovorni vlasnici izbacili, kao i onih o kojima nema ko da brine ili leči, s obzirom da nadležne institucije nisu zainteresovane za rešavanje ovog problema. Mali broj ljudi ima želju da pomogne ovim životinjama, ali oni nailaze na prepreke, kako novčane prirode, tako i teškog pronalaženja domova za njih.
@@ -18,7 +48,7 @@ Ideja za ovakav projekat je potekla od činjenice da je na ulicama svih gradova 
 - Bootstrap
 - jQuery
 
-## Funkcije aplikacije
+## Stranice aplikacije
 
 ### Početna stranica
 Na početnoj stranici korisnik može videti osnovne informacije o aplikaciji, čemu je namenjena, kao i prečice za dodavanje oglasa i kategorije postavljenih oglasa.
@@ -60,7 +90,7 @@ Nakon prijave, korisniku su dostupne opcije za dodavanje oglasa kao i za odjavlj
 ### Odjava
 Kada korisnik želi da završi korišćenje aplikacije, može se odjaviti.
 
-### Dodavanje oglsa
+### Dodavanje oglasa
 Prijavljeni korisnici imaju mogućnost dodavanja oglasa. Forma za dodavanje oglasa sadrži sledeća polja:
 
 - Kategorija, padajući meni u kome su izlistane sve postojeće kategorije
@@ -127,12 +157,6 @@ Na ovoj stranici su prikazane sve informacije o oglasu i to:
 - Slideshow sa najviše 5 fotografija
 
 ![Oglas](doc/oglas.png "Oglas")
-
-
-### Kontakt
-Kontakt forma putem koje će posetilac moći da kontaktira autora aplikacije.
-
-Ukoliko je korisnik prijavljen, polja za ime i E-Mail adresu će biti popunjena i onemogućena.
 
 ## Struktura projekta
 
@@ -530,3 +554,8 @@ Po uspešnom završetku ovog zahteva, koristeći jQuery, ćemo na osnovu element
 ```
 
 ## Zaključak
+Kroz razvoj ove aplikacije dolazimo do zaključka da je PHP programski jezik dobar izbor za brzi razvoj jednostavnih aplikacija, kao i da postoji dovoljno prostora za njeno unapredjenje. U kombinaciji sa JavaScriptom postižemo veći nivo interaktivnosti sa korisnikom.
+
+U planu je i dalje razvijanje ove aplikacije u cilju spajanja ljudi koji žele da pomognu napuštenim životinjama, kao i u radi sopstvenog usavršavanja u oblasti programiranja.
+
+Želja mi je da takodje u budućnosti napišem i aplikaciju za primenu u pravima i na taj način spojim znanje stečeno na IT Akademiji sa svojom strukom.

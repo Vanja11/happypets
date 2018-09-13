@@ -7,15 +7,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Početna</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?page=categories">Kategorije</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?page=contact">Kontakt</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.php">Početna</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.php?page=categories">Kategorije</a>
+            </li>
           </ul>
           <span class="navbar-text">
           Copyright &copy; 2018 HappyPets
