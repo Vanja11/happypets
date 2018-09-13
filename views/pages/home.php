@@ -1,4 +1,9 @@
 
+<?php
+    if (!defined('IN_PAGE')) {
+        die('Ovo nije dozvoljeno');
+    }
+?>
 <div class="container-fluid mt-3">
     <div class="jumbotron">
         <h1 class="display-4">Udomi me!</h1>

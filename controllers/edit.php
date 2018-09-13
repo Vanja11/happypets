@@ -1,6 +1,6 @@
 <?php
 if (!defined('IN_PAGE')) {
-    die ('Otkud ti ovde?');
+    die ('Ovo nije dozvoljeno');
 }
 
 $editView = new View('views/pages/edit.php');
@@ -10,8 +10,6 @@ $categories = $db->getCategories();
 $editView->ad = $ad;
 $editView->categories = $categories;
 $editView->photos = $db->getPhotos($_GET['ad']);
-
-$error = null;
 
 if (!empty($_POST)) {
     $editView->posted = true;

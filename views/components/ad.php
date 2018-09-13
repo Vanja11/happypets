@@ -1,3 +1,9 @@
+<?php
+    if (!defined('IN_PAGE')) {
+        die('Ovo nije dozvoljeno');
+    }
+?>
+
 <div class="card" style="width: 18rem;">
     <?php
         if ($this->ad['path']) {

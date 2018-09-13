@@ -404,4 +404,129 @@ public function __toString() {
 ```
 
 #### Primer kontrolera
-Kao primer kontrolera uzećemo `edit.php` pošto je to kontroler koji obuhvata validaciju ulaznih parametara, korišćenje viewa, upis u bazu i postavljanje fotografija
+Kao primer kontrolera uzećemo `create.php` pošto je to kontroler koji obuhvata validaciju ulaznih parametara, korišćenje viewa, upis u bazu i postavljanje fotografija.
+
+Na početku samog kontrolera proveravamo da li je učitan kroz `index.php` fajl ili mu je neko pristupio direktno, što želimo da sprečimo
+
+```php
+if (!defined('IN_PAGE')) {
+    die ('Ovo nije dozvoljeno');
+}
+```
+
+Instanciramo View klasu sa putanjom `views/pages/create.php`.
+
+```php
+$view = new View('views/pages/create.php');
+```
+
+Pozivamo metodu `getCategories` iz DB klase kako bismo preuzeli spisak dostupnih kategorija, i smeštamo ga u view promenljivu `categories`
+
+```php
+$view->categories = $db->getCategories();
+```
+
+Zatim proveravamo da li je forma poslata, i ako jeste postavljamo view promenljive `posted` i `postData`
+
+```php
+if (!empty($_POST)) {
+    $view->posted = true;
+    $view->postData = $_POST;
+```
+
+Radimo validaciju forme, i postavljamo promenljivu `$error` na grešku ukoliko postoji
+
+```php
+if (!$_POST['category'] || $_POST['category'] === '') {
+    $error = 'Odaberite kategoriju';
+} else if (!$_POST['title'] ) {
+    $error = 'Unesite naslov oglasa';
+} else if (!$_POST['description'] ) {
+    $error = 'Unesite tekst oglasa';
+} else if ($_POST['phone'] && strlen($_POST['phone']) < 9) {
+    $error = 'Telefon mora sadržati najmanje 9 cifara';
+} else if ($_POST['phone'] && !is_numeric($_POST['phone'])) {
+    $error = 'Telefon je neispravan';
+}
+```
+
+Grešku takodje prosledjujemo i view-u
+
+```php
+$view->error = $error;
+```
+
+Ukoliko je forma validna, odnosno nema greške, pozivamo metodu `create` iz DB klase i rezultat koji će biti ID oglasa smeštamo u view promenljivu `adId`
+
+```php
+if (!$error) {
+    $view->adId = $db->create($_POST['category'], $_POST['title'], $_POST['description'], $_POST['phone'], $_FILES['photos']);
+}
+```
+
+Sledi deo `create` metode koji je zadužen za upload fotografija
+
+```php
+for ($i = 0; $i < 5; $i++) {
+    if ($photos['tmp_name'][$i] !== '' && strpos($photos['type'][$i], 'image/') === 0) {
+        $this->uploadPhoto($adId, $photos['name'][$i], $photos['tmp_name'][$i]);
+    }
+}      
+```
+
+`uploadPhoto` metoda koristi `move_uploaded_file` funkciju kako bi iz privremenog direktorijuma premestila fotografiju u `uploads` direktorijum, i na kraju čuva podatke o fotografiji u tabelu `uploads`
+
+```php
+move_uploaded_file($path, 'uploads/' . $filePath);
+
+if ($statement = $this->mysqli->prepare('INSERT INTO uploads (path, ads_id) VALUES (?, ?)')) {
+    $statement->bind_param('ss', $filePath, $adId);
+
+    $statement->execute();
+    $statement->close();
+}
+```
+
+Na kraju je potrebno da ispišemo renderovan view na ekran
+
+```php
+echo $view;
+```
+
+### JavaScript Kôd
+
+U projektu imamo samo jedan JavaScript fajl, `main.js` koji je uglavnom zadužen za slanje i obradu AJAX zahteva. Koristimo ga za brisanje oglasa, brisanje fotografija i obnavljanje oglasa, te imamo 3 funkcije: `deleteAd`, `deletePhoto` i `renewAd`
+
+Navešćemo samo primer `deleteAd` funkcije.
+
+Funkcija `deleteAd` prima 2 argumenta: ID oglasa i element, odnosno dugme koje je korisnik kliknuo
+
+```javascript
+function deleteAd(id, element) {
+```
+
+Želimo da pitamo korisnika da li je siguran da želi da obriše oglas, pošto će se on trajno obrisati iz baze podataka
+
+```javascript
+if (confirm('Da li ste sigurni da želite da obrišete ovaj oglas?')) {
+```
+
+Ukoliko želi, šaljemo AJAX zahtev na adresu `ajax.php?func=deleteAd&ad=[ID Oglasa]`
+
+```javascript
+$.ajax({
+    url: 'ajax.php?func=deleteAd&ad=' + id,
+})
+```
+
+Po uspešnom završetku ovog zahteva, koristeći jQuery, ćemo na osnovu elementa koji je prosledjen kao argument funkcije, pronaći element samog oglasa i u njega ubaciti dodatan sadržaj koji će predstavljati poruku o uspešnom brisanju oglasa
+
+```javascript
+.done(function () {
+    $(element)
+        .parents('.card')
+        .append('<div class="deletedAd"><div class="alert alert-success" role="alert">Uspešno ste obrisali oglas</div></div>');
+});
+```
+
+## Zaključak

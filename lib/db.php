@@ -1,4 +1,7 @@
 <?php
+if (!defined('IN_PAGE')) {
+    die ('Ovo nije dozvoljeno');
+}
 
 class DB {
     function __construct() {

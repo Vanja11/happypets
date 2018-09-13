@@ -1,6 +1,6 @@
 <?php
 if (!defined('IN_PAGE')) {
-    die ('Otkud ti ovde?');
+    die ('Ovo nije dozvoljeno');
 }
 $me = $_SESSION['user'];
 

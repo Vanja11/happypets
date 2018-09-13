@@ -1,4 +1,7 @@
 <?php
+if (!defined('IN_PAGE')) {
+    die ('Ovo nije dozvoljeno');
+}
 
 class View {
     protected $viewPath;
@@ -31,7 +34,7 @@ class View {
         if ($this->renderLayout) {
             include('layout/header.php');
         }
-        
+
         include($this->viewPath);
 
         if ($this->renderLayout) {

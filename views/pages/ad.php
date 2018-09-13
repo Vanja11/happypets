@@ -1,3 +1,8 @@
+<?php
+    if (!defined('IN_PAGE')) {
+        die('Ovo nije dozvoljeno');
+    }
+?>
 <div class="container-fluid mt-3">
     <h2>
         <?php echo $this->escape($this->ad['title']); ?>
